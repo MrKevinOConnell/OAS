@@ -624,6 +624,16 @@ components:
         count:
           type: integer
           format: int32
+    ChannelOrDehydratedChannel:
+      oneOf:
+        - $ref: '#/components/schemas/Channel'
+        - $ref: '#/components/schemas/DehydratedChannel'
+        - type: 'null'
+      discriminator:
+        propertyName: type
+        mapping:
+          channel: '#/components/schemas/Channel'
+          dehydratedChannel: '#/components/schemas/DehydratedChannel'
     CastWithInteractions:
       type: object
       allOf:
@@ -650,7 +660,7 @@ components:
               items:
                 $ref: "#/components/schemas/User"
             channel:
-              $ref: "#/components/schemas/Channel"
+              $ref: "#/components/schemas/ChannelOrDehydratedChannel"
     CastWithInteractionsAndConversations:
       type: object
       allOf:
@@ -724,6 +734,23 @@ components:
       properties:
         cast:
           $ref: "#/components/schemas/CastWithInteractions"
+    DehydratedChannel:
+      type: object
+      required:
+        - id
+        - name
+        - object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        object:
+          type: string
+          enum:
+            - channel_dehydrated
+        image_url:
+          type: string
     Channel:
       type: object
       required:
