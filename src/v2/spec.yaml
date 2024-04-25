@@ -662,15 +662,16 @@ components:
             channel:
               $ref: "#/components/schemas/Channel"
     CastWithInteractionsAndConversations:
-      type: object
       allOf:
         - $ref: "#/components/schemas/CastWithInteractions"
-      properties:
-        direct_replies:
-          type: array
-          items:
-            $ref: "#/components/schemas/CastWithInteractions"
-          description: "note: This is recursive. It contains the direct replies to the cast and their direct replies up to n reply_depth."
+        - required:
+            - direct_replies
+          properties:
+            direct_replies:
+              type: array
+              items:
+                $ref: "#/components/schemas/CastWithInteractions"
+              description: "note: This is recursive. It contains the direct replies to the cast and their direct replies up to n reply_depth."
     Conversation:
       type: object
       required:
